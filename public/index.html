@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Universal Control Hub</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <h1 id="title">Universal Control Hub</h1>
+  <div class="top-right">
+    <p id="track-status" class="chip" role="status" aria-live="polite">Head tracking: off</p>
+    <button id="settings-button" type="button" class="quiet" aria-expanded="false" aria-controls="settings">Head tracking</button>
+  </div>
+</header>
+
+<main id="screen">
+  <!-- Top level: one panel per remote, in the four corners (and one more below). -->
+  <section id="view-hub" class="view hub" aria-label="Remotes">
+    <div class="panels" id="panels"></div>
+  </section>
+  <!-- A remote: filled in from the apps list. -->
+  <section id="view-remote" class="view remote" hidden aria-labelledby="remote-title">
+    <div class="remote-head">
+      <button id="back" type="button" class="quiet back">← Back to hub</button>
+      <h2 id="remote-title"></h2>
+    </div>
+    <div class="remote-body">
+      <div class="remote-controls" id="remote-controls"></div>
+      <div class="remote-info" id="remote-info"></div>
+    </div>
+  </section>
+</main>
+
+<!-- The on-screen keyboard: slides up when a text box is focused, drag it to move, drag its corner to resize. -->
+<div id="keyboard" class="keyboard" hidden role="group" aria-label="On-screen keyboard">
+  <div class="kb-bar" id="kb-bar"><span>Keyboard</span><span class="kb-hint">drag to move · drag the corner to resize</span></div>
+  <div class="kb-rows" id="kb-rows"></div>
+  <div class="kb-grip" id="kb-grip" aria-hidden="true"></div>
+</div>
+
+<!-- Head tracking settings. -->
+<aside id="settings" class="settings" hidden aria-labelledby="settings-h">
+  <div class="settings-head">
+    <h2 id="settings-h">Head tracking</h2>
+    <button id="settings-close" type="button" class="quiet">Close</button>
+  </div>
+  <p class="hint">Put a bright sticker on your forehead. Turn the camera on, select the sticker in the picture, then hold your head still and choose Center. Move your head to move the cursor; press the select key to press what it is on.</p>
+  <div class="row">
+    <button id="camera-toggle" type="button">Turn camera on</button>
+    <button id="center" type="button" disabled>Center</button>
+  </div>
+  <div class="preview-wrap">
+    <canvas id="preview" width="320" height="240" aria-label="Camera picture: select the sticker"></canvas>
+    <p id="marker-status" class="hint" role="status" aria-live="polite">Camera is off.</p>
+  </div>
+  <label>Sensitivity <input id="gain" type="range" min="1" max="6" step="0.25" value="2.5"></label>
+  <label>Smoothing <input id="smooth" type="range" min="0" max="0.9" step="0.05" value="0.6"></label>
+  <label>Color tolerance <input id="tolerance" type="range" min="8" max="40" step="1" value="18"></label>
+  <label><input id="mirror" type="checkbox" checked> Mirror (move left to go left)</label>
+  <fieldset>
+    <legend>Selecting</legend>
+    <label>Select key <select id="select-key"><option value=" ">Space</option><option value="Enter">Enter</option><option value="any">Any key</option></select></label>
+    <label><input id="dwell" type="checkbox"> Dwell: select by holding still</label>
+    <label>Dwell time <input id="dwell-ms" type="range" min="500" max="3000" step="100" value="1200"> <span id="dwell-ms-out">1.2 s</span></label>
+    <label><input id="show-regions" type="checkbox" checked> Show the four regions</label>
+  </fieldset>
+</aside>
+
+<div id="regions" class="regions" aria-hidden="true"><div class="r tl"></div><div class="r tr"></div><div class="r bl"></div><div class="r br"></div></div>
+<div id="cursor" class="cursor" aria-hidden="true"><div class="dwell-ring"></div></div>
+<video id="camera" playsinline muted hidden></video>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

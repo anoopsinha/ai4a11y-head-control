@@ -1,0 +1,10 @@
+{
+  "name": "ai4a11y-head-control",
+  "version": "0.1.0",
+  "private": true,
+  "license": "Apache-2.0",
+  "type": "module",
+  "description": "Universal Control Hub: one screen for many remotes, steered by head movement from the camera. A demo app for the AI for Accessibility Toolkit (research prototype).",
+  "scripts": { "start": "node server.js", "test": "node --check public/js/app.js && node --check public/js/apps.js && node --check public/js/keyboard.js && node --check public/js/cursor.js && node --check public/js/head.js && node --check server.js && echo syntax ok" },
+  "engines": { "node": ">=20" }
+}
